@@ -13,14 +13,14 @@ public:
 //heal hp player
 //int: hp แสดงว่าถ้าเลือก hp (+1)
 
-class HealItem : public Item {
+class healItem : public Item {
 public:
-    std::string getName() const override { return "Cigarette"; }
+    std::string getName() const override { return "Energy Boost"; }
 };
 
 //skip turn player
 //int: handcuff 
-class hand_culf : public Item {
+class skip_turn : public Item {
 public:
     std::string getName() const override { return "hand_culf"; }
 };
