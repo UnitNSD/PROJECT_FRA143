@@ -3,22 +3,20 @@
 
 #include <string>
 #include <vector>
-#include "Item.h"
+#include "base_class.h"
+
+
 
 class player {
 private:
-    std::string name;
-    int hp;
-    int handcuff; 
-    std::vector<Item*> items;
-
-
+   std::vector<Item*> possible_random_item;
 public:
-    player(const std::string& n);
-    void addItem(Item* item);
-    void showItems() const;
-};
-
+player() = default; // Default constructor
+void addItem(Item* item, read_player* turn);
+void showItems(read_player* turn);
+void useitem(int slot, read_player* turn);
+void shoot(read_player* player,std::vector<bool> bullet);
+void draw_random_item(read_player* player);
 #endif
 
-
+};
