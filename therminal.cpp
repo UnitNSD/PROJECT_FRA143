@@ -1,40 +1,155 @@
-#pragma once
-#include <iostream>
-#include "Player.cpp"
+#include "Player.h"
 #include "Item.h"
 #include "Radom_Bullet.h"
+#include <iostream>
+#include <cstdlib>
 
-// Set up game
-void game() {    
+bool error_message(int start_num, int end_num, int input) {
+    if (input < start_num || input > end_num) {
+        std::cout << "Invalid input! Please Try agaun " ;
+        return true; // Return true to indicate an error
+    }
+    return false; // Return false to indicate no error
+    
+}
+
+void game() {
+    int universal_check = 1;
+    int round = 0;
+    player console;
     std::cout << "Welcome to FIBO Roulete!!!\n";
     read_player* player1 = new read_player("Student 1");
     read_player* player2 = new read_player("Student 2");
-    player1->next_turn = player2;
-    player2->next_turn = player1; 
+
+
+
+    // Get player names
     std::cout << "Enter your name player 1: ";
     std::cin >> player1->name;
     std::cout << "Enter your name player 2: ";
     std::cin >> player2->name;
-    while (player1->hp > 0 && player2->hp > 0) {
-        std::cout << player1->name << "'s turn\n";
-        Radom_Bullet bullet;
-        bullet.Radom_Ammout_Bullet();
-        bullet.Radom_In_cartridge();
-        std::cout << "You have " << bullet.Get_Ammout_Bullet() << " bullets in your cartridge.\n";
-        
-        // Player 1's turn logic here
-        // For example, player1->shoot(player2, bullet.cartridge);
-        
-        std::cout << player2->name << "'s turn\n";
-        // Player 2's turn logic here
-        // For example, player2->shoot(player1, bullet.cartridge);
+
+
+
+    // draw initial items for both players
+    console.set_turn(player1);
+    console.draw_random_item();
+    console.draw_random_item();
+
+    console.set_turn(player2);
+    console.draw_random_item();
+    console.draw_random_item();
+
+    // Link players for turn switching
+    player1->next_turn = player2;
+    player2->next_turn = player1;
+
+
+
+    //Random starting player
+    srand(time(0));
+    int random_start = rand() % 2;
+    if (random_start == 1) {
+        console.set_turn(player1);
+    } else {
+        console.set_turn(player2);
     }
-};
-void start(){
+    //Announce starting player
+    std::cout << "Player " << console.get_turn()->name << " starts First!\n";
+    std::cout << "START GAME!!!\n";
 
+
+
+
+
+    // Main game loop
+    while (player1->hp > 0 && player2->hp > 0) { // Continue until one player loses
+        std::cout << "Round: " << ++round << "\n" ;
+        std::cout << "Reloading gun...\n";
+
+        // Reload the gun when ammo out with random bullets
+        console.get_projectime()->Radom_Ammout_Bullet(); // Randomly set the number of bullets
+        console.get_projectime()->Radom_In_cartridge(); // Randomly fill the cartridge with bullets
+        console.get_projectime()->print_type_ammo(); // Print the type of bullets in the cartridge
+        console.set_turn(console.get_turn()->next_turn); // Switch to the next player
+        console.draw_random_item(); // Draw a random item for the playerol
+        console.draw_random_item(); // Draw a random item for the playerol
+        console.set_turn(console.get_turn()->next_turn); // Switch to the next player
+        console.draw_random_item(); // Draw a random item for the playerol
+        console.draw_random_item(); // Draw a random item for the playerol
+        
+        
+        while (console.get_gun()->cartridge.size() > 1) {
+
+        console.show_status(); // show state of that player have
+
+        if (console.get_turn()->handcuff == false) {
+        // ยิงหรือใช้ไอเท็ม
+        universal_check = 1; // Reset universal_check for the next action
+
+    while (console.state_switching == 0) {
+        console.state_switching = 0;
+        std::cout << "Use your item or shoot? (use[1]/shoot[2]): ";
+        int choice_fight;
+        std::cin >> choice_fight;
+
+        switch (choice_fight) {
+            case 1: {
+                int item_index;
+                std::cout << "Enter the index of the item you want to use (enter index): ";
+                std::cin >> item_index;
+                console.useitem(item_index);
+                break;
+            }
+            case 2: {
+                std::cout << "Who do you want to shoot? (yourself[1]/opponent[2]): ";
+                int choice_shoot;
+                std::cin >> choice_shoot;
+                switch (choice_shoot) {
+                    case 1:
+                        console.shoot(true); // Shoot yourself
+                        break;
+                    case 2:
+                        console.shoot(false); // Shoot opponent
+                        break;
+                    default:
+                        std::cout << "!Invalid target. Please try again!\n";
+                        break; // Ask again
+                }
+                break;
+            }
+            default:
+                std::cout << "!Invalid choice. Please try again!\n";
+                break; // Ask again
+    }
+    if(console.state_switching == 1) {
+    console.set_turn(console.get_turn()->next_turn);} // Switch turn
+    std::cout << "Next turn: " << console.get_turn()->name << "\n";
+    console.state_switching = 0; // Reset state_switching for the next turn
+    break; // Exit the while loop after a valid action
 }
-int main() {
-    game();
+        } else {
+            std::cout << "You are handcuffed and cannot take action this turn.\n";
+            console.get_turn()->handcuff = false; // Reset handcuff status for the next turn
+            console.set_turn(console.get_turn()->next_turn); // Switch to the next player
+        }
 
+        // Check if any player has lost
+        if (player1->hp <= 0) {
+            std::cout << player1->name << " has lost the game!\n";
+            break;
+        } else if (player2->hp <= 0) {
+            std::cout << player2->name << " has lost the game!\n";
+            break;
+        }
+    }
+}               
+    } 
+
+
+int main() {
+    std::srand(std::time(0));
+    std::cout << "Working\n";
+    game();
     return 0;
 }
