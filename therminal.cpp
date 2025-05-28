@@ -79,7 +79,10 @@ void game() {
         console.get_projectime()->Radom_Ammout_Bullet(); // Randomly set the number of bullets
         console.get_projectime()->Radom_In_cartridge(); // Randomly fill the cartridge with bullets
         console.get_projectime()->print_type_ammo(); // Print the type of bullets in the cartridge
+        console.get_projectime()->printShells();
         console.set_turn(console.get_turn()->next_turn); // Switch to the next player
+       
+       
         console.draw_random_item(); // Draw a random item for the playerol
         console.draw_random_item(); // Draw a random item for the playerol
         console.set_turn(console.get_turn()->next_turn); // Switch to the next player

@@ -8,10 +8,28 @@
 #include <ctime>
 #include "base_class.h"
 
+#define RESET   "\033[0m"
+#define BLACK   "\033[30m"      /* Black */
+#define RED     "\033[31m"      /* Red */
+#define GREEN   "\033[32m"      /* Green */
+#define YELLOW  "\033[33m"      /* Yellow */
+#define BLUE    "\033[34m"      /* Blue */
+#define MAGENTA "\033[35m"      /* Magenta */
+#define CYAN    "\033[36m"      /* Cyan */
+#define WHITE   "\033[37m"      /* White */
+
 /*เขียน random bulletโดยที่ให้สุ่ม bullet ก่อนแล้วค่อยเขียน funtion มาอ่าน bullet return ออกมา */
 
 class Radom_Bullet {
 public:
+    std::vector<std::string> shell = {
+    ".----.______   ",
+    "|mga        |  ",
+    "|   ___________",
+    "|  /          /",
+    "| /          / ",
+    "|/__________/  "
+};
     gun* gun_socket = nullptr;
 
     Radom_Bullet() {
@@ -60,7 +78,43 @@ public:
             return -1;
         }
     }
-};
+
+
+    void printShells() {
+        int pass = gun_socket->pass;
+        int retake = gun_socket->retake;
+        const std::vector<std::string>shellTemplate = shell;
+        const std::string spacing = "   ";
+
+        // Step 1: Normalize shell line widths
+        size_t maxLen = 0;
+        for (const std::string& line : shellTemplate) {
+            if (line.length() > maxLen)
+                maxLen = line.length();
+        }
+
+        std::vector<std::string> uniformShell;
+        for (const std::string& line : shellTemplate) {
+            std::string padded = line;
+            padded.resize(maxLen, ' ');
+            uniformShell.push_back(padded);
+        }
+
+        // Step 2: Create color pattern (retake -> RED, pass -> CYAN)
+        std::vector<std::string> colors;
+        colors.insert(colors.end(), retake, RED);
+        colors.insert(colors.end(), pass, CYAN);
+
+        // Step 3: Print shells in one aligned row
+        for (size_t line = 0; line < uniformShell.size(); ++line) {
+            for (const std::string& color : colors) {
+                std::cout << color << uniformShell[line] << RESET << spacing;
+            }
+            std::cout << std::endl;
+        }
+    }
+}
+;
 
 
 #endif 
