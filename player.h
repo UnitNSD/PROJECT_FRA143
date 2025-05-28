@@ -53,6 +53,7 @@ void show_status(); //แสดงสถานะของผู้เล่น 
 
 void show_next_bullet(); //แสดงกระสุนถัดไป  
 // void show_next_bullet(bool  ); //แสดงกระสุนถัดไป
+void clear_game_data(); //ล้างหน้าจอเกม
 };
 
 
