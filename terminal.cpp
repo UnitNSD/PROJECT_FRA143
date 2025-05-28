@@ -5,14 +5,8 @@
 #include <cstdlib>
 #include <unistd.h> //หน่วงเวลา
 
-bool error_message(int start_num, int end_num, int input) {
-    if (input < start_num || input > end_num) {
-        std::cout << "Invalid input! Please Try agaun " ;
-        return true; // Return true to indicate an error
-    }
-    return false; // Return false to indicate no error
-    
-}
+
+
 
 void game() {
     int universal_check = 1;
