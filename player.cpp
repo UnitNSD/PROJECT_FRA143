@@ -46,8 +46,8 @@ void player::draw_random_item() {
 }
 
 void player::show_status() {
-    std::cout << "Player: " << current_turn->name << "\n";
-    std::cout << "Health: " << current_turn->hp << "\n";
+    std::cout << "Player: " << current_turn->name  ;
+    std::cout << "  Health: " << current_turn->hp << "\n";
     std::cout << "double_damage: " << (current_turn->double_damage ? "Yes" : "No") << "\n";
     std::cout << "Items in hand:\n";
     for (int i = 0; i < current_turn->hand.size(); i++) {
