@@ -47,16 +47,17 @@ void player::draw_random_item() {
 }
 
 void player::show_status() {
-    std::cout << "Player: " << current_turn->name  ;
-    std::cout << "  Health: " << current_turn->hp << "\n";
-    std::cout << "double_damage: " << (current_turn->double_damage ? "Yes" : "No") << "\n";
-    std::cout << "Items in hand:\n";
+    std::cout << YELLOW << "__________________________________________________________" << RESET << "\n";  
+    std::cout << YELLOW << "Player: " << RESET << BLUE << current_turn->name << RESET ;
+    std::cout << YELLOW <<"  Health: " << RESET << RED << current_turn->hp << RESET << "\n";
+    std::cout << YELLOW << "double_damage: " << RESET << RED << (current_turn->double_damage ?"Yes" : "No") << RESET << "\n";
+    std::cout << YELLOW << "Items in hand:" << RESET << "\n";
     for (int i = 0; i < current_turn->hand.size(); i++) {
-        std::cout << "[" << i << "] ";
+        std::cout << YELLOW << "[" << RESET << i << YELLOW << "] " << RESET;
         if (current_turn->hand[i] == nullptr) {
-            std::cout << "(empty)";
+            std::cout << CYAN << "(empty)" << RESET;
         } else {
-            std::cout << current_turn->hand[i]->getName();
+            std::cout << CYAN << current_turn->hand[i]->getName() << RESET;
         }
         std::cout << std::endl;
     }
@@ -69,12 +70,12 @@ void player::shoot(bool entity) {// true = ตัวเอง, false = ฝั่
         if(teacher_project_time->cartridge[0] == 0){
             std::cout << "Click......... \n";  
             sleep(1); 
-            std::cout << "Blankkkkk eiei\n";
+            std::cout << YELLOW << "Blankkkkk eiei" << RESET <<"\n";
             state_switching = 0;}
         else {
             std::cout << "Click......... \n";  
             sleep(1); 
-            std::cout <<"\33[31mBangggggggggg\n\33[m";
+            std::cout << RED << "Bangggggggggg" << RESET << "\n";
             if(current_turn->double_damage == true){current_turn->hp -= 2;current_turn->double_damage = false; } // Reset double_damage after use
             else{ current_turn->hp -= 1; state_switching = 1; } // Set state_switching to 1 to indicate shooting action
         }
@@ -83,11 +84,11 @@ void player::shoot(bool entity) {// true = ตัวเอง, false = ฝั่
         if(teacher_project_time->cartridge[0] == 0){
         std::cout << "Click......... \n" ;  
         sleep(1); 
-        std::cout << "Blankkkkk eiei\n";}
+        std::cout << YELLOW << "Blankkkkk eiei" << RESET << "\n";}
         else {
             std::cout << "Click......... \n"; 
             sleep(1);
-            std::cout << "\033[31mBangggggggggg\033[0m\n"; 
+            std::cout << RED << "Bangggggggggg" << RESET << "\n"; 
             if(current_turn->double_damage == true){current_turn->next_turn->hp -= 2;current_turn->double_damage = false; } // Reset double_damage after use
             else{ current_turn->next_turn->hp -= 1; } 
         }

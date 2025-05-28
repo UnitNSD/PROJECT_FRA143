@@ -18,7 +18,8 @@ void game() {
     int universal_check = 1;
     int round = 0;
     player console;
-    std::cout << "Welcome to FIBO Roulete!!!\n";
+    std::cout << YELLOW << "__________________________________________________________" << RESET << "\n";    
+    std::cout << "  Welcome to FIBO Roulete!!!\n";
     read_player* player1 = new read_player("Student 1");
     read_player* player2 = new read_player("Student 2");
 
@@ -60,6 +61,7 @@ void game() {
         console.set_turn(player2);
     }
     //Announce starting player
+    std::cout << YELLOW << "__________________________________________________________" << RESET << "\n";
     std::cout << "Player " << console.get_turn()->name << " starts First!\n";
     std::cout << "START GAME!!!\n";
 
@@ -69,6 +71,7 @@ void game() {
 
     // Main game loop
     while (player1->hp > 0 && player2->hp > 0) { // Continue until one player loses
+        std::cout << YELLOW << "__________________________________________________________" << RESET << "\n";
         std::cout << "Round: " << ++round << "\n" ;
         std::cout << "Reloading gun...\n";
 
@@ -94,20 +97,20 @@ void game() {
 
     while (console.state_switching == 0) {
         console.state_switching = 0;
-        std::cout << "Use your item or shoot? (use[1]/shoot[2]): ";
+        std::cout << YELLOW << "Use your item or shoot? (use[1]/shoot[2]): " << RESET;
         int choice_fight;
         std::cin >> choice_fight;
 
         switch (choice_fight) {
             case 1: {
                 int item_index;
-                std::cout << "Enter the index of the item you want to use (enter index): ";
+                std::cout << YELLOW << "Enter the index of the item you want to use (enter index): " << RESET;
                 std::cin >> item_index;
                 console.useitem(item_index);
                 break;
             }
             case 2: {
-                std::cout << "Who do you want to shoot? (yourself[1]/opponent[2]): ";
+                std::cout << YELLOW << "Who do you want to shoot? (yourself[1]/opponent[2]): " << RESET;
                 int choice_shoot;
                 std::cin >> choice_shoot;
                 switch (choice_shoot) {
@@ -118,39 +121,44 @@ void game() {
                         console.shoot(false); // Shoot opponent
                         break;
                     default:
-                        std::cout << "!Invalid target. Please try again!\n";
+                        std::cout << RED << "!Invalid target. Please try again!" << RESET << "\n";
                         break; // Ask again
                 }
                 break;
             }
             default:
-                std::cout << "!Invalid choice. Please try again!\n";
+                std::cout << RED << "!Invalid target. Please try again!" << RESET << "\n";
                 break; // Ask again
     }
     if(console.state_switching == 1) {
     console.set_turn(console.get_turn()->next_turn);} // Switch turn
+    std::cout << YELLOW << "__________________________________________________________" << RESET << "\n";
     std::cout << "Next turn: " << console.get_turn()->name << "\n";
     console.state_switching = 0; // Reset state_switching for the next turn
     break; // Exit the while loop after a valid action
 }
         } else {
             std::cout << "You got W gread and cannot take action this turn.\n";
+            std::cout << YELLOW << "__________________________________________________________" << RESET << "\n";
             console.get_turn()->handcuff = false; // Reset handcuff status for the next turn
             console.set_turn(console.get_turn()->next_turn); // Switch to the next player
         }
 
         // Check if any player has lost
         if (player1->hp <= 0) {
-            std::cout << player1->name << " has lost the game!\n";
+            std::cout << YELLOW << "__________________________________________________________" << RESET << "\n";
+            std::cout << RED << player1->name << " has lost the game!" << RESET << "\n";
             break;
         } else if (player2->hp <= 0) {
-            std::cout << player2->name << " has lost the game!\n";
+            std::cout << YELLOW << "__________________________________________________________" << RESET << "\n";
+            std::cout << RED << player2->name << " has lost the game!" << RESET << "\n";
             break;
         }
     }
 }       
 console.clear_game_data(); // Clear game data after the game ends
-    std::cout << "Thanks for playing!\n";        
+    std::cout << YELLOW << "__________________________________________________________" << RESET << "\n";
+    std::cout << CYAN << "Thanks for playing!" << RESET << "\n";        
     } 
 
 
