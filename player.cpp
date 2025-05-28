@@ -3,6 +3,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <unistd.h> //หน่วงเวลา
 
 // Add item to player's inventory
 void player::addItem(Item* item) {
@@ -66,19 +67,27 @@ void player::shoot(bool entity) {// true = ตัวเอง, false = ฝั่
     // Implement shooting logic here
     if(entity == true) {
         if(teacher_project_time->cartridge[0] == 0){
-            std::cout << "Click......... \n" << "Blankkkkk eiei\n";
+            std::cout << "Click......... \n";  
+            sleep(1); 
+            std::cout << "Blankkkkk eiei\n";
             state_switching = 0;}
         else {
-            std::cout << "\033[31mClick......... \nBangggggggggg\n\033[0m";
+            std::cout << "Click......... \n";  
+            sleep(1); 
+            std::cout <<"\33[31mBangggggggggg\n\33[m";
             if(current_turn->double_damage == true){current_turn->hp -= 2;current_turn->double_damage = false; } // Reset double_damage after use
             else{ current_turn->hp -= 1; state_switching = 1; } // Set state_switching to 1 to indicate shooting action
         }
     }
     else {
         if(teacher_project_time->cartridge[0] == 0){
-        std::cout << "Click......... \n" << "Blankkkkk eiei\n";}
+        std::cout << "Click......... \n" ;  
+        sleep(1); 
+        std::cout << "Blankkkkk eiei\n";}
         else {
-            std::cout << "Click......... \n" << "Bangggggggggg\n";
+            std::cout << "Click......... \n"; 
+            sleep(1);
+            std::cout << "\033[31mBangggggggggg\033[0m\n"; 
             if(current_turn->double_damage == true){current_turn->next_turn->hp -= 2;current_turn->double_damage = false; } // Reset double_damage after use
             else{ current_turn->next_turn->hp -= 1; } 
         }
@@ -87,17 +96,12 @@ void player::shoot(bool entity) {// true = ตัวเอง, false = ฝั่
     teacher_project_time->cartridge.erase(teacher_project_time->cartridge.begin()); // Remove the first bullet from the cartridge
     }
 
+void player::clear_game_data() {
+    delete current_turn->next_turn; // Free the memory allocated for current_turn
+    delete current_turn; // Free the memory allocated for current_turn
+    for(auto& item : possible_random_item) {
+        delete item; // Free the memory allocated for each item in possible_random_item
+    delete teacher_project_time; // Free the memory allocated for teacher_project_time
+    }
+}
 
-// Display items
-// void player::showItems() const {
-//     std::cout << name << " has items: ";
-//     if (items.empty()) {
-//         std::cout << "(none)\n";
-//     } else {
-//         for (size_t i = 0; i < items.size(); ++i) {
-//             std::cout << items[i]->getName();
-//             if (i < items.size() - 1) std::cout << ", ";
-//         }
-//         std::cout << "\n";
-//     }
-// }

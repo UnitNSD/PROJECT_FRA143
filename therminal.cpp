@@ -3,6 +3,7 @@
 #include "Radom_Bullet.h"
 #include <iostream>
 #include <cstdlib>
+#include <unistd.h> //หน่วงเวลา
 
 bool error_message(int start_num, int end_num, int input) {
     if (input < start_num || input > end_num) {
@@ -26,8 +27,10 @@ void game() {
     // Get player names
     std::cout << "Enter your name player 1: ";
     std::cin >> player1->name;
+    sleep(0.5);
     std::cout << "Enter your name player 2: ";
     std::cin >> player2->name;
+    sleep(0.5);
 
 
 
@@ -35,10 +38,12 @@ void game() {
     console.set_turn(player1);
     console.draw_random_item();
     console.draw_random_item();
+    sleep(1);
 
     console.set_turn(player2);
     console.draw_random_item();
     console.draw_random_item();
+    sleep(1);   
 
     // Link players for turn switching
     player1->next_turn = player2;
@@ -129,7 +134,7 @@ void game() {
     break; // Exit the while loop after a valid action
 }
         } else {
-            std::cout << "You are handcuffed and cannot take action this turn.\n";
+            std::cout << "You got W gread and cannot take action this turn.\n";
             console.get_turn()->handcuff = false; // Reset handcuff status for the next turn
             console.set_turn(console.get_turn()->next_turn); // Switch to the next player
         }
@@ -143,7 +148,9 @@ void game() {
             break;
         }
     }
-}               
+}       
+console.clear_game_data(); // Clear game data after the game ends
+    std::cout << "Thanks for playing!\n";        
     } 
 
 
