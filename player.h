@@ -6,7 +6,7 @@
 
 
 class player {
-protected:; // Player's inventory
+protected: // Player's inventory
 Item* obj = nullptr; // Current item being used
    
    
