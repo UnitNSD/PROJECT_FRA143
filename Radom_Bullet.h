@@ -23,12 +23,11 @@
 class Radom_Bullet {
 public:
     std::vector<std::string> shell = {
-    ".----.______   ",
-    "|mga        |  ",
-    "|   ___________",
-    "|  /          /",
-    "| /          / ",
-    "|/__________/  "
+    ".----.____  ",
+    "|mga      | ",
+    "|  _________",
+    "| /        /",
+    "|/________/ "
 };
     gun* gun_socket = nullptr;
 
