@@ -7,9 +7,9 @@
       "command": "g++",
       "args": [
         "-g",                      // สำหรับ debug
-        "therminal.cpp",          // ไฟล์หลัก
+        "terminal.cpp",          // ไฟล์หลัก
         "player.cpp",             // ไฟล์ที่มีนิยามของ class/function
-        "-o", "therminal.exe"     // ชื่อโปรแกรมที่ได้
+        "-o", "terminal.exe"     // ชื่อโปรแกรมที่ได้
       ],
       "group": {
         "kind": "build",

@@ -99,6 +99,10 @@ void game() {
         std::cout << YELLOW << "Use your item or shoot? (use[1]/shoot[2]): " << RESET;
         int choice_fight;
         std::cin >> choice_fight;
+        if (std::cin.fail()) {
+        std::cin.clear(); // clear the fail flag
+        std::cin.ignore(10000, '\n'); // discard invalid input
+        std::cout << "Invalid input. Please enter a number.\n";}
 
         switch (choice_fight) {
             case 1: {
@@ -112,6 +116,10 @@ void game() {
                 std::cout << YELLOW << "Who do you want to shoot? (yourself[1]/opponent[2]): " << RESET;
                 int choice_shoot;
                 std::cin >> choice_shoot;
+                if (std::cin.fail()) {
+                std::cin.clear(); // clear the fail flag
+                std::cin.ignore(10000, '\n');} // discard invalid input
+        
                 switch (choice_shoot) {
                     case 1:
                         console.shoot(true); // Shoot yourself
